@@ -53,10 +53,12 @@ public class TheGUI{
 	JLabel LLCHLabel     =      new JLabel("LLCH - Lotte-Lehmann Concert Hall");
 	JLabel PHELPLabel    =      new JLabel("PHELP - Phelps Hall");
 
-      //Arrays of building names and abbreviations
+      //Arrays of building names and abbreviations and buttons
+      ArrayList<String> bldgNames = new ArrayList<String>();
+      ArrayList<String> bldgAbbrs = new ArrayList<String>();
+      ArrayList<JButton> buttons = new ArrayList<JButton>();
+      
       public void setUpArrays() {
-            ArrayList<String> bldgNames = new ArrayList<String>();
-            ArrayList<String> bldgAbbrs = new ArrayList<String>();
             bldgNames.add("Trailer 387");
             bldgAbbrs.add("387");
             bldgNames.add("Trailer 429");
@@ -77,6 +79,17 @@ public class TheGUI{
             bldgAbbrs.add("LLCH");
             bldgNames.add("Phelps Hall");
             bldgAbbrs.add("PHELP");
+
+            buttons.add(T387);
+            buttons.add(T429);
+            buttons.add(BRDA);
+            buttons.add(BSIF);
+            buttons.add(GIRV);
+            buttons.add(HSSB);
+            buttons.add(HFH);
+            buttons.add(KERR);
+            buttons.add(LLCH);
+            buttons.add(PHELP);
       }
 
         //building information
@@ -260,6 +273,9 @@ public class TheGUI{
             frame.setSize(420, 375);
             frame.setBackground(Color.WHITE);
             frame.setVisible(true);
+
+            //put cursor in search bar
+            searchBar.requestFocus();
 	}//end setUpHomeScreen
 
  	//function to clear the main frame
@@ -272,6 +288,7 @@ public class TheGUI{
             infoPanel.removeAll();
             thePanel.removeAll();
             newPanel.removeAll();
+            searchBar.setText("");
             frame.getContentPane().removeAll();
             frame.getContentPane().remove(thePanel);
             frame.getContentPane().remove(newPanel);
@@ -280,8 +297,14 @@ public class TheGUI{
 	}//end guiRemoveAll
 
       public void search() throws IOException{
-            // @@ STUB @@
-
+            String query = searchBar.getText();
+            if (bldgAbbrs.contains(query) || bldgNames.contains(query)) {
+                  int i = bldgNames.indexOf(query);
+                  int j = bldgAbbrs.indexOf(query);
+                  int k;
+                  k = i >= 0 ? i : j;
+                  buttons.get(k).doClick();
+            }
       }
 
 	public void T387() throws IOException{
@@ -457,7 +480,7 @@ public class TheGUI{
             newPanel.setBackground(Color.WHITE);
             newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
             newPanel.setSize(800,625);
-            JTextArea HFHTA = new JTextArea(T429Info);
+            JTextArea HFHTA = new JTextArea(HFHInfo);
             HFHTA.setEditable(false);
             HFHTA.setLineWrap(true);
             HFHTA.setWrapStyleWord(true);
