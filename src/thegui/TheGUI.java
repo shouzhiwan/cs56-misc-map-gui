@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,36 +21,63 @@ import java.awt.Dimension;
 
 public class TheGUI{
  	//declare the panels and buttons to be accessed from multiple methods  
-	JFrame frame        =      new JFrame("UCSB Campus Map");//main frame
-	JPanel thePanel     =      new JPanel();//Back homescreen panel
-	JPanel newPanel     =      new JPanel();// New panel when button is clicked
-	JPanel leftPanel    =      new JPanel();//Left homescreen panel
-	JPanel rightPanel   =      new JPanel();//Right homescreen panel
-	JPanel bottomPanel  =      new JPanel();//Bottom subpanels
-	JPanel topPanel     =      new JPanel();//Top subpanels
-        JPanel infoPanel    =      new JPanel();//info panel on subpanels
-	JButton T387        =      new JButton("387");
-	JButton T429        =      new JButton("429");
-	JButton BRDA        =      new JButton("BRDA");
-	JButton BSIF        =      new JButton("BSIF");
-	JButton GIRV	    =	   new JButton("GIRV");
-	JButton HSSB	    =      new JButton("HSSB");
-	JButton HFH 	    =      new JButton("HFH");
-	JButton KERR	    =      new JButton("KERR");
-	JButton LLCH        =      new JButton("LLCH");
-	JButton PHELP       =      new JButton("PHELP");
-	JButton cancel      =      new JButton("Cancel");//cancel button for subscreens
-	JLabel T387Label    =      new JLabel("387 - Trailer 387");
-	JLabel T429Label    =      new JLabel("429 - Trailer 429");
-	JLabel BRDALabel    =      new JLabel("BRDA - Broida Hall");
-	JLabel BSIFLabel    =      new JLabel("BSIF - Biological Sciences Instruction Facility");
-	JLabel GIRVLabel    =      new JLabel("GIRV - Girvetz Hall");
-	JLabel HSSBLabel    =      new JLabel("HSSB - Humanities and Social Sciences Building");
-	JLabel HFHLabel     =      new JLabel("HFH - Harold Frank Hall");
-	JLabel KERRLabel    =      new JLabel("KERR - Kerr Hall");
-	JLabel LLCHLabel    =      new JLabel("LLCH - Lotte-Lehmann Concert Hall");
-	JLabel PHELPLabel   =      new JLabel("PHELP - Phelps Hall");
+	JFrame frame         =      new JFrame("UCSB Campus Map");//main frame
+	JPanel thePanel      =      new JPanel();//Back homescreen panel
+	JPanel newPanel      =      new JPanel();//New panel when button is clicked
+	JPanel leftPanel     =      new JPanel();//Left homescreen panel
+	JPanel rightPanel    =      new JPanel();//Right homescreen panel
+	JPanel bottomPanel   =      new JPanel();//Bottom subpanels
+	JPanel topPanel      =      new JPanel();//Top subpanels
+      JPanel infoPanel     =      new JPanel();//info panel on subpanels
+      JTextField searchBar =      new JTextField(20);//Seach bar 
+	JButton T387         =      new JButton("387");
+	JButton T429         =      new JButton("429");
+	JButton BRDA         =      new JButton("BRDA");
+	JButton BSIF         =      new JButton("BSIF");
+	JButton GIRV	   =      new JButton("GIRV");
+	JButton HSSB	   =      new JButton("HSSB");
+	JButton HFH 	   =      new JButton("HFH");
+	JButton KERR	   =      new JButton("KERR");
+	JButton LLCH         =      new JButton("LLCH");
+	JButton PHELP        =      new JButton("PHELP");
+	JButton cancel       =      new JButton("Cancel");//cancel button for subscreens
+      JLabel searchLabel   =      new JLabel("Search: ");
+	JLabel T387Label     =      new JLabel("387 - Trailer 387");
+	JLabel T429Label     =      new JLabel("429 - Trailer 429");
+	JLabel BRDALabel     =      new JLabel("BRDA - Broida Hall");
+	JLabel BSIFLabel     =      new JLabel("BSIF - Biological Sciences Instruction Facility");
+	JLabel GIRVLabel     =      new JLabel("GIRV - Girvetz Hall");
+	JLabel HSSBLabel     =      new JLabel("HSSB - Humanities and Social Sciences Building");
+	JLabel HFHLabel      =      new JLabel("HFH - Harold Frank Hall");
+	JLabel KERRLabel     =      new JLabel("KERR - Kerr Hall");
+	JLabel LLCHLabel     =      new JLabel("LLCH - Lotte-Lehmann Concert Hall");
+	JLabel PHELPLabel    =      new JLabel("PHELP - Phelps Hall");
 
+      //Arrays of building names and abbreviations
+      public void setUpArrays() {
+            ArrayList<String> bldgNames = new ArrayList<String>();
+            ArrayList<String> bldgAbbrs = new ArrayList<String>();
+            bldgNames.add("Trailer 387");
+            bldgAbbrs.add("387");
+            bldgNames.add("Trailer 429");
+            bldgAbbrs.add("429");
+            bldgNames.add("Broida Hall");
+            bldgAbbrs.add("BRDA");
+            bldgNames.add("Biological Sciences Instruction Facility");
+            bldgAbbrs.add("BSIF");
+            bldgNames.add("Girvetz Hall");
+            bldgAbbrs.add("GIRV");
+            bldgNames.add("Humanities and Social Sciences Building");
+            bldgAbbrs.add("HSSB");
+            bldgNames.add("Harold Frank Hall");
+            bldgAbbrs.add("HFH");
+            bldgNames.add("Kerr Hall");
+            bldgAbbrs.add("KERR");
+            bldgNames.add("Lotte-Lehmann Concert Hall");
+            bldgAbbrs.add("LLCH");
+            bldgNames.add("Phelps Hall");
+            bldgAbbrs.add("PHELP");
+      }
 
         //building information
         String T387Info = 
@@ -172,6 +200,8 @@ public class TheGUI{
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             thePanel.setLayout(new BoxLayout(thePanel, BoxLayout.X_AXIS));
             thePanel.setSize(600,400);
+            topPanel.setBackground(Color.WHITE);
+            topPanel.setSize(600,50);
             leftPanel.setBackground(Color.WHITE);
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
             leftPanel.setSize(300,200);
@@ -180,6 +210,7 @@ public class TheGUI{
             rightPanel.setSize(300,200);
      	 
             //setting size and adding actionlister
+            searchBar.addActionListener(new SearchBarActionListener());
             T387.setPreferredSize(new Dimension(100,100));
             T387.addActionListener(new T387Listener());
             T429.setPreferredSize(new Dimension(100,100));
@@ -202,6 +233,8 @@ public class TheGUI{
             KERR.addActionListener(new KERRListener());
 
             //adding panels and setting dimensions
+            topPanel.add(searchLabel);
+            topPanel.add(searchBar);
             leftPanel.add(T387);
             leftPanel.add(Box.createRigidArea(new Dimension(200,50)));
             leftPanel.add(T429);
@@ -223,6 +256,7 @@ public class TheGUI{
             thePanel.add(leftPanel);
             thePanel.add(rightPanel);
             frame.getContentPane().add(BorderLayout.CENTER, thePanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
             frame.setSize(420, 375);
             frame.setBackground(Color.WHITE);
             frame.setVisible(true);
@@ -241,9 +275,14 @@ public class TheGUI{
             frame.getContentPane().removeAll();
             frame.getContentPane().remove(thePanel);
             frame.getContentPane().remove(newPanel);
- 	    frame.validate();
+ 	      frame.validate();
             frame.repaint();
 	}//end guiRemoveAll
+
+      public void search() throws IOException{
+            // @@ STUB @@
+
+      }
 
 	public void T387() throws IOException{
             guiRemoveAll();
@@ -581,6 +620,16 @@ public class TheGUI{
             frame.setVisible(true);
 	}//end PHELP
     
+      //action listener class for the search bar
+      class SearchBarActionListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+            try {search();}
+                catch (IOException ex) {
+                    Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+            }
+      }//end SearchBarActionListener
+
 	//action listener class for the cancel button
 	class CancelActionListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
