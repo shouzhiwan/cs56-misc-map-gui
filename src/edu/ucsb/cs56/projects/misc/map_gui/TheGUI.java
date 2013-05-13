@@ -1,4 +1,4 @@
-package thegui;
+package edu.ucsb.cs56.projects.misc.map_gui;
 import java.awt.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
