@@ -7,24 +7,20 @@
   -->
 
   <property environment="env"/> <!-- load the environment variables --> 
-   <property name="webRoot" value="${env.HOME}/public_html/" />
+   <property name="webRoot" value="${env.HOME}/public_html/cs56" />
    <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
 
   <property name="course" value="cs56" />
   <property name="quarter" value="S13" />
   <property name="issueNum" value="0000707" />
-  <property name="mainClass" value="thegui.Run" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.misc.map_gui.Run" />
 
+  <!--######## What am I suppose to do for the projectPath below? ########-->
+  
   <property name="projectName" value="${course}_${quarter}_${issueNum}" />
+  <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />
   
-  <!-- 
-  ###################################################
-  
-  What am I suppose to do for the projectPath below?
-  
-  ###################################################
-  -->
-  <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />\
+  <!--########################################################################-->
   
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
   <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
@@ -92,7 +88,8 @@
    <!-- delete the old javadoc -->
    <delete quiet="true" dir="${javadocDest}" /> 
 
-   <!-- copy everything you just made to the javadoc destination, and then make it readable --> 
+   <!-- copy everything you just made to the javadoc destination,
+    and then make it readable --> 
  
    <copy todir="${javadocDest}" > 
      <fileset dir="javadoc"/> 
@@ -134,7 +131,7 @@
   #######################################################################
   -->
 
-
+<!--
  <target name="download" > 
  
   <delete quiet="true"> 
@@ -169,7 +166,9 @@
   </delete> 
   
 </target> 
+-->
  
+ <!--
  <target name="publish" depends="jar,javadoc,download,jws,linenumbers">
    <mkdir dir="${webRoot}/${projectPath}" />
   
@@ -200,8 +199,9 @@
 
    <echo>Project published to ${webBaseUrl}/${projectPath}</echo> 
  </target>
+	-->
 
-
+<!--
  <target name="jws" depends="compile,jar">
 
    <delete dir="${webRoot}/${projectPath}/jws" />
@@ -215,7 +215,7 @@
    </copy>
    <echo>Java web start at ${jwsURL}</echo>
  </target>
-
+-->
 
 <target name="linenumbers" description="Creates a file containing all source files with line numbers">               
    <exec executable="bash">                                                                                          
