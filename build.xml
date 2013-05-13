@@ -23,8 +23,12 @@
   
   <property name="javadocLink" value="http://java.sun.com/javase/7/docs/api/" />
   <path id="project.class.path">
-		<pathelement location="build"/>
-		<pathelement location="lib/junit-4.8.2.jar"/>
+	<pathelement location="build"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
+  </path>
+  
+  <path id="project.class.path2">
+	<pathelement location="lib/junit-4.8.2.jar"/>
   </path>
   
   <!-- 
@@ -77,7 +81,7 @@
    <delete dir="javadoc" quiet="true" /> 
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >  
       <fileset dir="src" includes="**/*.java"/>  
-      <classpath refid="project.class.path" />
+      <classpath refid="project.class.path2" />
       <link href="${javadocLink}" />
    </javadoc>
 
