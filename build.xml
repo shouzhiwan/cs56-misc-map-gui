@@ -14,13 +14,9 @@
   <property name="quarter" value="S13" />
   <property name="issueNum" value="0000707" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.misc.map_gui.Run" />
-
-  <!--######## What am I suppose to do for the projectPath below? ########-->
   
   <property name="projectName" value="${course}_${quarter}_${issueNum}" />
   <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />
-  
-  <!--########################################################################-->
   
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
   <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
@@ -124,9 +120,7 @@
   <!-- 
   #######################################################################
   
-  I modify up till this point, I don't understand what's going on after
-  this part
-  Am I just suppose to remove everything?
+  everything below belongs to jws, and therefore removed
   
   #######################################################################
   -->
