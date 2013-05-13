@@ -19,6 +19,7 @@ import java.awt.Dimension;
  */
 
 public class TheGUI{
+	
  	//declare the panels and buttons to be accessed from multiple methods  
 	JFrame frame        =      new JFrame("UCSB Campus Map");//main frame
 	JPanel thePanel     =      new JPanel();//Back homescreen panel
