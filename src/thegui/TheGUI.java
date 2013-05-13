@@ -40,6 +40,12 @@ public class TheGUI{
 	JButton KERR	   =      new JButton("KERR");
 	JButton LLCH         =      new JButton("LLCH");
 	JButton PHELP        =      new JButton("PHELP");
+	JButton NORTH      =       new JButton("NORTH");
+	JButton SOUTH 	= 	new JButton("SOUTH");
+	JButton CAMPBELL 	= 	new JButton("CAMPBELL");
+	JButton ENGRSCI 	=	 new JButton("ENGRSCI");
+	JButton ENGR2 	=	 new JButton("ENGR2");
+	JButton LIBRARY 	=	 new JButton ("LIBRARY");
 	JButton cancel       =      new JButton("Cancel");//cancel button for subscreens
       JLabel searchLabel   =      new JLabel("Search: ");
 	JLabel T387Label     =      new JLabel("387 - Trailer 387");
@@ -52,6 +58,12 @@ public class TheGUI{
 	JLabel KERRLabel     =      new JLabel("KERR - Kerr Hall");
 	JLabel LLCHLabel     =      new JLabel("LLCH - Lotte-Lehmann Concert Hall");
 	JLabel PHELPLabel    =      new JLabel("PHELP - Phelps Hall");
+	JLabel NORTHLabel    =     new JLabel("NORTH - North Hall");
+	JLabel SOUTHLabel	= 		new JLabel("SOUTH - South Hall");
+	JLabel CAMPBELLLabel =  new JLabel("CAMPBELL - Campbell Hall");
+	JLabel ENGRSCILabel = 	new JLabel("ENGRSCI - Engineering Science Building");
+	JLabel ENGR2Label 	= 		new JLabel("ENGR2 - Engineering II Building");
+	JLabel LIBRARYLabel = 	new JLabel("LIBRARY - Davidson Library");
 
       //Arrays of building names and abbreviations and buttons
       ArrayList<String> bldgNames = new ArrayList<String>();
@@ -79,6 +91,16 @@ public class TheGUI{
             bldgAbbrs.add("LLCH");
             bldgNames.add("Phelps Hall");
             bldgAbbrs.add("PHELP");
+			bldgNames.add("North Hall");
+			bldgAbbrs.add("NORTH");
+			bldgNames.add("South Hall");
+			bldgAbbrs.add("SOUTH");
+			bldgNames.add("Engineering Science Building");
+			bldgAbbrs.add("ENGRSCI");
+			bldgNames.add("Engineering II Building");
+			bldgAbbrs.add("ENGR2");
+			bldgNames.add("Davidson Library");
+			bldgAbbrs.add("LIBRARY");
 
             buttons.add(T387);
             buttons.add(T429);
@@ -90,6 +112,11 @@ public class TheGUI{
             buttons.add(KERR);
             buttons.add(LLCH);
             buttons.add(PHELP);
+			buttons.add(NORTH);
+			buttons.add(SOUTH);
+			buttons.add(ENGRSCI);
+			buttons.add(ENGR2);
+			buttons.add(LIBRARY);
       }
 
         //building information
@@ -207,11 +234,32 @@ public class TheGUI{
             +"You will see a building labeled as Gevirtz Graduate School of Education. This building is actually Phelps Hall. "
             +"Walk through the walkway into the courtyard.";
                 
+		String NORTHInfo = 
+			"1 Start out by walking north from the University Center towards South Hall. "
+			+"Cross the bikepath at the bike loop and continue walking past South Hall."
+			+"\n"
+			+"2 After you have passed South Hall, continue walking north beside the bike path."
+			+"\n"
+			+"3 When you reach the bike lot near the bus loop, turn right."
+			+"The building across the small grass field is North Hall.";
+		
+		String SOUTHInfo = 
+			"Stub";
+			
+		String ENGRSCIInfo =
+			"Stub";
+		
+		String ENGR2Info = 
+			"Stub";
+		
+		String LIBRARYInfo =
+			"Stub";
         //function to set up the homescreen
 	public void setUpHomeScreen() throws IOException{
             guiRemoveAll();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             thePanel.setLayout(new BoxLayout(thePanel, BoxLayout.X_AXIS));
+			thePanel.setBackground(Color.WHITE);
             thePanel.setSize(600,400);
             topPanel.setBackground(Color.WHITE);
             topPanel.setSize(600,50);
@@ -244,6 +292,16 @@ public class TheGUI{
             PHELP.addActionListener(new PHELPListener());
             KERR.setPreferredSize(new Dimension(100,100));
             KERR.addActionListener(new KERRListener());
+			NORTH.setPreferredSize(new Dimension(100,100));
+			NORTH.addActionListener(new NORTHListener());
+			SOUTH.setPreferredSize(new Dimension(100,100));
+			SOUTH.addActionListener(new SOUTHListener());
+			ENGRSCI.setPreferredSize(new Dimension(100,100));
+			ENGRSCI.addActionListener(new ENGRSCIListener());
+			ENGR2.setPreferredSize(new Dimension(100,100));
+			ENGR2.addActionListener(new ENGR2Listener());
+			LIBRARY.setPreferredSize(new Dimension(100,100));
+			LIBRARY.addActionListener(new LIBRARYListener());
 
             //adding panels and setting dimensions
             topPanel.add(searchLabel);
@@ -257,6 +315,12 @@ public class TheGUI{
             leftPanel.add(BSIF);
             leftPanel.add(Box.createRigidArea(new Dimension(200,50)));
             leftPanel.add(GIRV);
+			leftPanel.add(Box.createRigidArea(new Dimension(200,50)));
+			leftPanel.add(NORTH);
+			leftPanel.add(Box.createRigidArea(new Dimension(200,50)));
+			leftPanel.add(ENGRSCI);
+			leftPanel.add(Box.createRigidArea(new Dimension(200,50)));
+			leftPanel.add(LIBRARY);
             rightPanel.add(HSSB);
             rightPanel.add(Box.createRigidArea(new Dimension(200,50)));
             rightPanel.add(HFH);
@@ -266,11 +330,16 @@ public class TheGUI{
             rightPanel.add(LLCH);
             rightPanel.add(Box.createRigidArea(new Dimension(200,50)));
             rightPanel.add(PHELP);
+			rightPanel.add(Box.createRigidArea(new Dimension(200,50)));
+            rightPanel.add(SOUTH);
+			rightPanel.add(Box.createRigidArea(new Dimension(200,50)));
+            rightPanel.add(ENGR2);
+			rightPanel.add(Box.createRigidArea(new Dimension(200,75)));
             thePanel.add(leftPanel);
             thePanel.add(rightPanel);
             frame.getContentPane().add(BorderLayout.CENTER, thePanel);
             frame.getContentPane().add(BorderLayout.NORTH, topPanel);
-            frame.setSize(420, 375);
+            frame.setSize(420, 600);
             frame.setBackground(Color.WHITE);
             frame.setVisible(true);
 
@@ -643,6 +712,156 @@ public class TheGUI{
             frame.setVisible(true);
 	}//end PHELP
     
+	public void NORTH() throws IOException {
+			guiRemoveAll();
+			newPanel.setBackground(Color.WHITE);
+			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			newPanel.setSize(800,625);
+			JTextArea NORTHTA = new JTextArea(NORTHInfo);
+			NORTHTA.setEditable(false);
+			NORTHTA.setLineWrap(true);
+			NORTHTA.setWrapStyleWord(true);
+			JScrollPane NORTHScroll = new JScrollPane(NORTHTA);
+			NORTHScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			NORTHTA.setPreferredSize(new Dimension(200,600));
+			infoPanel.add(NORTHScroll);
+			bottomPanel.add(cancel);
+			newPanel.add(bottomPanel);
+			topPanel.add(NORTHLabel);
+			cancel.addActionListener(new CancelActionListener());
+			java.net.URL NORTH_URL = getClass().getResource("/PHELP.jpg");
+			JLabel NORTHlabel = new JLabel(new ImageIcon(NORTH_URL));
+			
+			newPanel.add(NORTHlabel);
+            frame.getContentPane().add(BorderLayout.EAST, infoPanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+            frame.getContentPane().add(BorderLayout.CENTER,newPanel);
+            frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+            frame.setSize(1000,625);
+            frame.setBackground(Color.WHITE);
+            frame.setVisible(true);
+	}
+	
+	public void SOUTH() throws IOException {
+			guiRemoveAll();
+			newPanel.setBackground(Color.WHITE);
+			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			newPanel.setSize(800,625);
+			JTextArea SOUTHTA = new JTextArea(SOUTHInfo);
+			SOUTHTA.setEditable(false);
+			SOUTHTA.setLineWrap(true);
+			SOUTHTA.setWrapStyleWord(true);
+			JScrollPane SOUTHScroll = new JScrollPane(SOUTHTA);
+			SOUTHScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			SOUTHTA.setPreferredSize(new Dimension(200,600));
+			infoPanel.add(SOUTHScroll);
+			bottomPanel.add(cancel);
+			newPanel.add(bottomPanel);
+			topPanel.add(SOUTHLabel);
+			cancel.addActionListener(new CancelActionListener());
+			java.net.URL SOUTH_URL = getClass().getResource("/PHELP.jpg");
+			JLabel SOUTHlabel = new JLabel(new ImageIcon(SOUTH_URL));
+			
+			newPanel.add(SOUTHlabel);
+            frame.getContentPane().add(BorderLayout.EAST, infoPanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+            frame.getContentPane().add(BorderLayout.CENTER,newPanel);
+            frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+            frame.setSize(1000,625);
+            frame.setBackground(Color.WHITE);
+            frame.setVisible(true);
+	}
+	
+	public void ENGRSCI() throws IOException {
+			guiRemoveAll();
+			newPanel.setBackground(Color.WHITE);
+			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			newPanel.setSize(800,625);
+			JTextArea ENGRSCITA = new JTextArea(ENGRSCIInfo);
+			ENGRSCITA.setEditable(false);
+			ENGRSCITA.setLineWrap(true);
+			ENGRSCITA.setWrapStyleWord(true);
+			JScrollPane ENGRSCIScroll = new JScrollPane(ENGRSCITA);
+			ENGRSCIScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			ENGRSCITA.setPreferredSize(new Dimension(200,600));
+			infoPanel.add(ENGRSCIScroll);
+			bottomPanel.add(cancel);
+			newPanel.add(bottomPanel);
+			topPanel.add(ENGRSCILabel);
+			cancel.addActionListener(new CancelActionListener());
+			java.net.URL ENGRSCI_URL = getClass().getResource("/PHELP.jpg");
+			JLabel ENGRSCIlabel = new JLabel(new ImageIcon(ENGRSCI_URL));
+			
+			newPanel.add(ENGRSCIlabel);
+            frame.getContentPane().add(BorderLayout.EAST, infoPanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+            frame.getContentPane().add(BorderLayout.CENTER,newPanel);
+            frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+            frame.setSize(1000,625);
+            frame.setBackground(Color.WHITE);
+            frame.setVisible(true);
+	}
+	
+	public void ENGR2() throws IOException {
+			guiRemoveAll();
+			newPanel.setBackground(Color.WHITE);
+			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			newPanel.setSize(800,625);
+			JTextArea ENGR2TA = new JTextArea(ENGR2Info);
+			ENGR2TA.setEditable(false);
+			ENGR2TA.setLineWrap(true);
+			ENGR2TA.setWrapStyleWord(true);
+			JScrollPane ENGR2Scroll = new JScrollPane(ENGR2TA);
+			ENGR2Scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			ENGR2TA.setPreferredSize(new Dimension(200,600));
+			infoPanel.add(ENGR2Scroll);
+			bottomPanel.add(cancel);
+			newPanel.add(bottomPanel);
+			topPanel.add(ENGR2Label);
+			cancel.addActionListener(new CancelActionListener());
+			java.net.URL ENGR2_URL = getClass().getResource("/PHELP.jpg");
+			JLabel ENGR2label = new JLabel(new ImageIcon(ENGR2_URL));
+			
+			newPanel.add(ENGR2label);
+            frame.getContentPane().add(BorderLayout.EAST, infoPanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+            frame.getContentPane().add(BorderLayout.CENTER,newPanel);
+            frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+            frame.setSize(1000,625);
+            frame.setBackground(Color.WHITE);
+            frame.setVisible(true);
+	}
+	
+	public void LIBRARY() throws IOException {
+			guiRemoveAll();
+			newPanel.setBackground(Color.WHITE);
+			newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
+			newPanel.setSize(800,625);
+			JTextArea LIBRARYTA = new JTextArea(LIBRARYInfo);
+			LIBRARYTA.setEditable(false);
+			LIBRARYTA.setLineWrap(true);
+			LIBRARYTA.setWrapStyleWord(true);
+			JScrollPane LIBRARYScroll = new JScrollPane(LIBRARYTA);
+			LIBRARYScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+			LIBRARYTA.setPreferredSize(new Dimension(200,600));
+			infoPanel.add(LIBRARYScroll);
+			bottomPanel.add(cancel);
+			newPanel.add(bottomPanel);
+			topPanel.add(LIBRARYLabel);
+			cancel.addActionListener(new CancelActionListener());
+			java.net.URL LIBRARY_URL = getClass().getResource("/PHELP.jpg");
+			JLabel LIBRARYlabel = new JLabel(new ImageIcon(LIBRARY_URL));
+			
+			newPanel.add(LIBRARYlabel);
+            frame.getContentPane().add(BorderLayout.EAST, infoPanel);
+            frame.getContentPane().add(BorderLayout.NORTH, topPanel);
+            frame.getContentPane().add(BorderLayout.CENTER,newPanel);
+            frame.getContentPane().add(BorderLayout.SOUTH, bottomPanel);
+            frame.setSize(1000,625);
+            frame.setBackground(Color.WHITE);
+            frame.setVisible(true);
+	}
+	
       //action listener class for the search bar
       class SearchBarActionListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
@@ -752,6 +971,51 @@ public class TheGUI{
                     }
             }
 	}//end PHELPListener
+	
+	class NORTHListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {NORTH();}
+					catch (IOException ex) {
+						Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+						}
+			}
+	}//end NORTHListener
+	
+	class SOUTHListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {SOUTH();}
+					catch (IOException ex) {
+						Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+						}
+			}
+	}//end SOUTHListener
+	
+	class ENGRSCIListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {ENGRSCI();}
+					catch (IOException ex) {
+						Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+						}
+			}
+	}//end ENGRSCIListener
+	
+	class ENGR2Listener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {ENGR2();}
+					catch (IOException ex) {
+						Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+						}
+			}
+	}//end ENGR2Listener
+	
+	class LIBRARYListener implements ActionListener {
+			public void actionPerformed(ActionEvent event) {
+				try {LIBRARY();}
+					catch (IOException ex) {
+						Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+						}
+			}
+	}//end LIBRARYListener
         
 } //end class
 
