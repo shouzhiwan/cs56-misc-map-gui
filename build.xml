@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project default="compile">
 
-  <!-- build.xml for Mantis issue
-       name: Aki Stankoski and Dennis Huynh for CS56, W12 -->
+  <!-- 
+  build.xml for Mantis issue
+  name: Aki Stankoski and Dennis Huynh for CS56, W12 
+  -->
 
   <property environment="env"/> <!-- load the environment variables --> 
    <property name="webRoot" value="${env.HOME}/public_html/" />
-   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}" />
+   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56" />
 
   <property name="course" value="cs56" />
-  <property name="quarter" value="W12" />
+  <property name="quarter" value="S13" />
   <property name="issueNum" value="0000707" />
   <property name="mainClass" value="thegui.Run" />
 
   <property name="projectName" value="${course}_${quarter}_${issueNum}" />
-  <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />
-  <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" /> 
-  <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" /> 
+  
+  <!-- 
+  ###################################################
+  
+  What am I suppose to do for the projectPath below?
+  
+  ###################################################
+  -->
+  <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />\
+  
+  <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
+  <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
+  
+  <property name="javadocLink" value="http://java.sun.com/javase/7/docs/api/" />
+  <path id="project.class.path">
+		<pathelement location="build"/>
+		<pathelement location="lib/junit-4.8.2.jar"/>
+  </path>
+  
+  <!-- 
   <property name="jwsDest" value="${webRoot}/${projectPath}/jws" /> 
   <property name="jwsURL" value="${webBaseUrl}/${projectPath}/jws" /> 
+  -->
 
 
   <target name="compile" >
     <mkdir dir="build" />
-    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source">
-
-     <classpath>
-         <pathelement location="build"/>
-         <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
-     </classpath>
+    <javac srcdir="src" destdir="build" debug="true" debuglevel="lines,source"
+		includeantruntime="false" >
+		<classpath refid="project.class.path" />
     </javac>
-
   </target>
 
   <target name="run" depends="compile,jar">
@@ -51,10 +67,7 @@
   <target name="test" depends="compile">
 
    <junit haltonerror="no" haltonfailure="no">
-       <classpath>
-         <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
-         <pathelement location="build" />
-       </classpath>
+       <classpath refid="project.class.path" />
 
        <batchtest fork="yes">
           <fileset dir="src">
@@ -64,17 +77,16 @@
        </batchtest>
 
         <formatter type="plain" usefile="false" /> 
-       
    </junit>
   </target>
+  
  <target name="javadoc" depends="compile"> 
  
    <delete dir="javadoc" quiet="true" /> 
    <javadoc  destdir="javadoc" author="true" version="true" use="true" >  
       <fileset dir="src" includes="**/*.java"/>  
-      <classpath>
-          <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
-     </classpath>
+      <classpath refid="project.class.path" />
+      <link href="${javadocLink}" />
    </javadoc>
 
    <!-- delete the old javadoc -->
@@ -111,6 +123,17 @@
        </manifest>
    </jar>
  </target>
+ 
+  <!-- 
+  #######################################################################
+  
+  I modify up till this point, I don't understand what's going on after
+  this part
+  Am I just suppose to remove everything?
+  
+  #######################################################################
+  -->
+
 
  <target name="download" > 
  
