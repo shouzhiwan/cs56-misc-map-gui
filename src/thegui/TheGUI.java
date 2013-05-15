@@ -43,9 +43,9 @@ public class TheGUI{
 	static JButton KERR     =      new JButton("KERR");
 	static JButton LLCH     =      new JButton("LLCH");
 	static JButton PHELP    =      new JButton("PHELP");
-	static JButton NORTH    =       new JButton("NORTH");
-	static JButton SOUTH    = 	new JButton("SOUTH");
-	static JButton CAMPBELL = 	new JButton("CAMPBELL");
+	static JButton NORTH    =      new JButton("NORTH");
+	static JButton SOUTH    = 	 new JButton("SOUTH");
+	static JButton CAMPBELL = 	 new JButton("CAMPBELL");
 	static JButton ENGRSCI  =	 new JButton("ENGRSCI");
 	static JButton ENGR2 	=	 new JButton("ENGR2");
 	static JButton LIBRARY 	=	 new JButton ("LIBRARY");
@@ -62,18 +62,20 @@ public class TheGUI{
 	JLabel KERRLabel     =      new JLabel("KERR - Kerr Hall");
 	JLabel LLCHLabel     =      new JLabel("LLCH - Lotte-Lehmann Concert Hall");
 	JLabel PHELPLabel    =      new JLabel("PHELP - Phelps Hall");
-	JLabel NORTHLabel    =     new JLabel("NORTH - North Hall");
-	JLabel SOUTHLabel	= 		new JLabel("SOUTH - South Hall");
-	JLabel CAMPBELLLabel =  new JLabel("CAMPBELL - Campbell Hall");
-	JLabel ENGRSCILabel = 	new JLabel("ENGRSCI - Engineering Science Building");
-	JLabel ENGR2Label 	= 		new JLabel("ENGR2 - Engineering II Building");
-	JLabel LIBRARYLabel = 	new JLabel("LIBRARY - Davidson Library");
+	JLabel NORTHLabel    =      new JLabel("NORTH - North Hall");
+	JLabel SOUTHLabel	   =      new JLabel("SOUTH - South Hall");
+	JLabel CAMPBELLLabel =      new JLabel("CAMPBELL - Campbell Hall");
+	JLabel ENGRSCILabel  = 	    new JLabel("ENGRSCI - Engineering Science Building");
+	JLabel ENGR2Label    = 	    new JLabel("ENGR2 - Engineering II Building");
+	JLabel LIBRARYLabel  = 	    new JLabel("LIBRARY - Davidson Library");
 
       //Arrays of building names and abbreviations and buttons
       static ArrayList<String> bldgNames = new ArrayList<String>();
       static ArrayList<String> bldgAbbrs = new ArrayList<String>();
       static ArrayList<JButton> buttons = new ArrayList<JButton>();
       
+      //Important: The relative order of the name, abbr and button ArrayLists must be the same
+      //All new entries should call the .add() method in the same order for each ArrayList
       static {
             bldgNames.add("Trailer 387");
             bldgAbbrs.add("387");
@@ -111,15 +113,15 @@ public class TheGUI{
             buttons.add(T429);
             buttons.add(BRDA);
             buttons.add(BSIF);
+            buttons.add(LIBRARY);
             buttons.add(ENGRSCI);
             buttons.add(ENGR2);
             buttons.add(GIRV);
             buttons.add(HFH);
             buttons.add(HSSB);
             buttons.add(KERR);
-            buttons.add(NORTH);
-            buttons.add(LIBRARY);
             buttons.add(LLCH);
+            buttons.add(NORTH);
             buttons.add(PHELP);
 		buttons.add(SOUTH);
 
