@@ -11,8 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *
@@ -30,17 +32,17 @@ public class TheGUI{
 	JPanel topPanel      =      new JPanel();//Top subpanels
       JPanel infoPanel     =      new JPanel();//info panel on subpanels
       JTextField searchBar =      new JTextField(20);//Seach bar 
-	JButton T387         =      new JButton("387");
-	JButton T429         =      new JButton("429");
-	JButton BRDA         =      new JButton("BRDA");
-	JButton BSIF         =      new JButton("BSIF");
-	JButton GIRV	   =      new JButton("GIRV");
-	JButton HSSB	   =      new JButton("HSSB");
-	JButton HFH 	   =      new JButton("HFH");
-	JButton KERR	   =      new JButton("KERR");
-	JButton LLCH         =      new JButton("LLCH");
-	JButton PHELP        =      new JButton("PHELP");
-	JButton cancel       =      new JButton("Cancel");//cancel button for subscreens
+	static JButton T387  =      new JButton("387");
+	static JButton T429  =      new JButton("429");
+	static JButton BRDA  =      new JButton("BRDA");
+	static JButton BSIF  =      new JButton("BSIF");
+	static JButton GIRV  =      new JButton("GIRV");
+	static JButton HSSB  =      new JButton("HSSB");
+	static JButton HFH   =      new JButton("HFH");
+	static JButton KERR  =      new JButton("KERR");
+	static JButton LLCH  =      new JButton("LLCH");
+	static JButton PHELP =      new JButton("PHELP");
+	static JButton cancel=      new JButton("Cancel");//cancel button for subscreens
       JLabel searchLabel   =      new JLabel("Search: ");
 	JLabel T387Label     =      new JLabel("387 - Trailer 387");
 	JLabel T429Label     =      new JLabel("429 - Trailer 429");
@@ -54,11 +56,11 @@ public class TheGUI{
 	JLabel PHELPLabel    =      new JLabel("PHELP - Phelps Hall");
 
       //Arrays of building names and abbreviations and buttons
-      ArrayList<String> bldgNames = new ArrayList<String>();
-      ArrayList<String> bldgAbbrs = new ArrayList<String>();
-      ArrayList<JButton> buttons = new ArrayList<JButton>();
+      static ArrayList<String> bldgNames = new ArrayList<String>();
+      static ArrayList<String> bldgAbbrs = new ArrayList<String>();
+      static ArrayList<JButton> buttons = new ArrayList<JButton>();
       
-      public void setUpArrays() {
+      static {
             bldgNames.add("Trailer 387");
             bldgAbbrs.add("387");
             bldgNames.add("Trailer 429");
@@ -69,10 +71,10 @@ public class TheGUI{
             bldgAbbrs.add("BSIF");
             bldgNames.add("Girvetz Hall");
             bldgAbbrs.add("GIRV");
-            bldgNames.add("Humanities and Social Sciences Building");
-            bldgAbbrs.add("HSSB");
             bldgNames.add("Harold Frank Hall");
             bldgAbbrs.add("HFH");
+            bldgNames.add("Humanities and Social Sciences Building");
+            bldgAbbrs.add("HSSB");
             bldgNames.add("Kerr Hall");
             bldgAbbrs.add("KERR");
             bldgNames.add("Lotte-Lehmann Concert Hall");
@@ -85,8 +87,8 @@ public class TheGUI{
             buttons.add(BRDA);
             buttons.add(BSIF);
             buttons.add(GIRV);
-            buttons.add(HSSB);
             buttons.add(HFH);
+            buttons.add(HSSB);
             buttons.add(KERR);
             buttons.add(LLCH);
             buttons.add(PHELP);
@@ -224,6 +226,8 @@ public class TheGUI{
      	 
             //setting size and adding actionlister
             searchBar.addActionListener(new SearchBarActionListener());
+	      //DocumentListener searchBarUpdate;
+            searchBar.getDocument().addDocumentListener(new SearchBarDocumentListener());
             T387.setPreferredSize(new Dimension(100,100));
             T387.addActionListener(new T387Listener());
             T429.setPreferredSize(new Dimension(100,100));
@@ -273,9 +277,7 @@ public class TheGUI{
             frame.setSize(420, 375);
             frame.setBackground(Color.WHITE);
             frame.setVisible(true);
-
-            //put cursor in search bar
-            searchBar.requestFocus();
+            searchBar.requestFocus(); //put cursor in search bar
 	}//end setUpHomeScreen
 
  	//function to clear the main frame
@@ -296,7 +298,7 @@ public class TheGUI{
             frame.repaint();
 	}//end guiRemoveAll
 
-      public void search() throws IOException{
+      public void search() throws IOException {
             String query = searchBar.getText();
             if (bldgAbbrs.contains(query) || bldgNames.contains(query)) {
                   int i = bldgNames.indexOf(query);
@@ -304,8 +306,30 @@ public class TheGUI{
                   int k;
                   k = i >= 0 ? i : j;
                   buttons.get(k).doClick();
+                  return;
             }
-      }
+      }//end search
+
+      public void autoComplete() throws IOException {
+            String query = searchBar.getText();
+            Vector<String> suggestions = new Vector<String>();
+            for(String abbr: bldgAbbrs) {
+                  if(abbr.startsWith(query)){
+                        suggestions.add(abbr);
+                  }
+            }
+            for(String name: bldgNames) {
+                  if(name.startsWith(query)) {
+                        suggestions.add(name);
+                  }
+            }
+
+            //Test loop for suggestions vector
+            for(int j = 0; j < suggestions.size(); j++) {
+                  System.out.println(suggestions.get(j));
+            }
+            System.out.println("");
+      }//end autoComplete
 
 	public void T387() throws IOException{
             guiRemoveAll();
@@ -644,6 +668,7 @@ public class TheGUI{
 	}//end PHELP
     
       //action listener class for the search bar
+      //this is called when a user presses enter
       class SearchBarActionListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
             try {search();}
@@ -652,6 +677,34 @@ public class TheGUI{
                       }
             }
       }//end SearchBarActionListener
+
+      //document listener for the search bar
+      //this is called for every change made to the JTextField 'searchBar'
+      class SearchBarDocumentListener implements DocumentListener{
+	  public void changedUpdate(DocumentEvent e){
+	      /* The search bar doesn't need to know about attribute updates
+		 other than text insertion and deletion
+	      try {autoComplete();}
+	      catch (IOException ex) {
+		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+	      }
+	      */
+	  }
+	  //called when there is an insertion to the document
+	  public void insertUpdate(DocumentEvent e){
+	      try {autoComplete();}
+	      catch (IOException ex) {
+		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+	      }
+	  }
+	  //called when there is a deletion in the document
+	  public void removeUpdate(DocumentEvent e){
+	      try {autoComplete();}
+	      catch (IOException ex) {
+		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+	      }
+	  }
+      }//end SearchBarDocumentActionListener
 
 	//action listener class for the cancel button
 	class CancelActionListener implements ActionListener{
