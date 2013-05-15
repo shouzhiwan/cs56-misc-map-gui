@@ -235,16 +235,23 @@ public class TheGUI{
             +"Walk through the walkway into the courtyard.";
                 
 		String NORTHInfo = 
-			"1 Start out by walking north from the University Center towards South Hall. "
-			+"Cross the bikepath at the bike loop and continue walking past South Hall."
+			"1 Start out by walking north towards South Hall. "
+			+"Cross the bikepath at the bike loop and continue walking past South Hall.\n"
 			+"\n"
-			+"2 After you have passed South Hall, continue walking north beside the bike path."
+			+"2 After you have passed South Hall, continue walking north beside the bike path.\n"
 			+"\n"
-			+"3 When you reach the bike lot near the bus loop, turn right."
-			+"The building across the small grass field is North Hall.";
+			+"3 When you reach the bike lot near the bus loop, turn right. "
+			+"The building across the small grass field is North Hall.\n";
 		
 		String SOUTHInfo = 
-			"Stub";
+			"1 Head east alongside the bike path until you reach the bike loop.\n"
+			+"\n"
+			+"2 Turn left and head north across the bike path. "
+			+"The bike loop should be on your right.\n"
+			+"\n"
+			+"3 Continue walking alongside the bike path until it turns right.\n"
+			+"\n"
+			+"4 You will see a bike lot to your right. The building right next to this bike lot is South Hall.\n";
 			
 		String ENGRSCIInfo =
 			"Stub";
@@ -253,7 +260,14 @@ public class TheGUI{
 			"Stub";
 		
 		String LIBRARYInfo =
-			"Stub";
+			"1 Head east alongside the bike path until you reach the bike loop.\n"
+			+"\n"
+			+"2 Continue east across the bike path and follow the bike path until you reach another bike loop.\n"
+			+"\n"
+			+"3 Head north across the bike path. The bike loop should be on your right.\n"
+			+"\n"
+			+"4 Continue walking north into the open courtyard. The building to your right is Davidson Library. "
+			+"The main entrance is near the center of the side facing you.\n";
         //function to set up the homescreen
 	public void setUpHomeScreen() throws IOException{
             guiRemoveAll();
@@ -729,7 +743,7 @@ public class TheGUI{
 			newPanel.add(bottomPanel);
 			topPanel.add(NORTHLabel);
 			cancel.addActionListener(new CancelActionListener());
-			java.net.URL NORTH_URL = getClass().getResource("/PHELP.jpg");
+			java.net.URL NORTH_URL = getClass().getResource("/NORTH.jpg");
 			JLabel NORTHlabel = new JLabel(new ImageIcon(NORTH_URL));
 			
 			newPanel.add(NORTHlabel);
@@ -759,7 +773,7 @@ public class TheGUI{
 			newPanel.add(bottomPanel);
 			topPanel.add(SOUTHLabel);
 			cancel.addActionListener(new CancelActionListener());
-			java.net.URL SOUTH_URL = getClass().getResource("/PHELP.jpg");
+			java.net.URL SOUTH_URL = getClass().getResource("/SOUTH.jpg");
 			JLabel SOUTHlabel = new JLabel(new ImageIcon(SOUTH_URL));
 			
 			newPanel.add(SOUTHlabel);
@@ -789,7 +803,7 @@ public class TheGUI{
 			newPanel.add(bottomPanel);
 			topPanel.add(ENGRSCILabel);
 			cancel.addActionListener(new CancelActionListener());
-			java.net.URL ENGRSCI_URL = getClass().getResource("/PHELP.jpg");
+			java.net.URL ENGRSCI_URL = getClass().getResource("/ENGRSCI.jpg");
 			JLabel ENGRSCIlabel = new JLabel(new ImageIcon(ENGRSCI_URL));
 			
 			newPanel.add(ENGRSCIlabel);
@@ -819,7 +833,7 @@ public class TheGUI{
 			newPanel.add(bottomPanel);
 			topPanel.add(ENGR2Label);
 			cancel.addActionListener(new CancelActionListener());
-			java.net.URL ENGR2_URL = getClass().getResource("/PHELP.jpg");
+			java.net.URL ENGR2_URL = getClass().getResource("/ENGR2.jpg");
 			JLabel ENGR2label = new JLabel(new ImageIcon(ENGR2_URL));
 			
 			newPanel.add(ENGR2label);
@@ -849,7 +863,7 @@ public class TheGUI{
 			newPanel.add(bottomPanel);
 			topPanel.add(LIBRARYLabel);
 			cancel.addActionListener(new CancelActionListener());
-			java.net.URL LIBRARY_URL = getClass().getResource("/PHELP.jpg");
+			java.net.URL LIBRARY_URL = getClass().getResource("/LIBRARY.jpg");
 			JLabel LIBRARYlabel = new JLabel(new ImageIcon(LIBRARY_URL));
 			
 			newPanel.add(LIBRARYlabel);
