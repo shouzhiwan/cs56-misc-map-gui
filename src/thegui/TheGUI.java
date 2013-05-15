@@ -30,8 +30,8 @@ public class TheGUI{
 	JPanel rightPanel    =      new JPanel();//Right homescreen panel
 	JPanel bottomPanel   =      new JPanel();//Bottom subpanels
 	JPanel topPanel      =      new JPanel();//Top subpanels
-      JPanel infoPanel     =      new JPanel();//info panel on subpanels
-      JTextField searchBar =      new JTextField(20);//Seach bar 
+    JPanel infoPanel     =      new JPanel();//info panel on subpanels
+    JTextField searchBar =      new JTextField(20);//Seach bar
 
 	static JButton T387     =      new JButton("387");
 	static JButton T429     =      new JButton("429");
@@ -51,7 +51,7 @@ public class TheGUI{
 	static JButton LIBRARY 	=	 new JButton ("LIBRARY");
 	JButton cancel          =      new JButton("Cancel");//cancel button for subscreens
 
-      JLabel searchLabel   =      new JLabel("Search: ");
+    JLabel searchLabel   =      new JLabel("Search: ");
 	JLabel T387Label     =      new JLabel("387 - Trailer 387");
 	JLabel T429Label     =      new JLabel("429 - Trailer 429");
 	JLabel BRDALabel     =      new JLabel("BRDA - Broida Hall");
@@ -262,10 +262,36 @@ public class TheGUI{
 			+"4 You will see a bike lot to your right. The building right next to this bike lot is South Hall.\n";
 			
 		String ENGRSCIInfo =
-			"Stub";
+			"1 Head east alongside the bike path until you reach the bike loop.\n"
+			+"\n"
+			+"2 Continue east across the bike path and follow the bike path until you reach another bike loop.\n"
+			+"\n"
+			+"3 Head north across the bike path. The bike loop should be on your right.\n"
+			+"\n"
+			+"4 Continue walking north into the open courtyard. "
+			+"When you pass the Arbor, turn right and head east. The library should be on your right.\n"
+			+"\n"
+			+"5 Continue walking east and you will see a large rectangular field. "
+			+"Walk to the end of the field until you see a bike path.\n"
+			+"\n"
+			+"6 Turn left and walk north alongside the bike path until you are in between two buildings. "
+			+"The building on your left (west) is the Chemistry building. "
+			+"The modern-looking building on your right (east) is the Engineering Science building.\n";
 		
 		String ENGR2Info = 
-			"Stub";
+			"1 Head east alongside the bike path until you reach the bike loop.\n"
+			+"\n"
+			+"2 Continue east across the bike path and follow the bike path until you reach another bike loop.\n"
+			+"\n"
+			+"3 Head north across the bike path. The bike loop should be on your right.\n"
+			+"\n"
+			+"4 Continue walking north into the open courtyard. "
+			+"When you pass the Arbor, turn right and head east. The library should be on your right.\n"
+			+"\n"
+			+"5 Continue walking east and you will see a large rectangular field. "
+			+"Walk to the end of the field until you see a bike path.\n"
+			+"\n"
+			+"6 The building on the other side of the bike path adjacent to the field is the Engineering II building.\n";
 		
 		String LIBRARYInfo =
 			"1 Head east alongside the bike path until you reach the bike loop.\n"
