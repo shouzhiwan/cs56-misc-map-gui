@@ -1,5 +1,6 @@
 package thegui;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -13,8 +14,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.Dimension;
+import java.util.*;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.HashMap;
 
 /**
  *
@@ -30,26 +33,30 @@ public class TheGUI{
 	JPanel rightPanel    =      new JPanel();//Right homescreen panel
 	JPanel bottomPanel   =      new JPanel();//Bottom subpanels
 	JPanel topPanel      =      new JPanel();//Top subpanels
+      //JPanel topSub1       =      new JPanel();
+      //JPanel topSub2       =      new JPanel();
       JPanel infoPanel     =      new JPanel();//info panel on subpanels
       JTextField searchBar =      new JTextField(20);//Seach bar 
+      final DefaultComboBoxModel suggestBoxModel = new DefaultComboBoxModel();
+      final JComboBox suggestBox = new JComboBox(suggestBoxModel);
 
-	static JButton T387     =      new JButton("387");
-	static JButton T429     =      new JButton("429");
-	static JButton BRDA     =      new JButton("BRDA");
-	static JButton BSIF     =      new JButton("BSIF");
-	static JButton GIRV     =      new JButton("GIRV");
-	static JButton HSSB     =      new JButton("HSSB");
-	static JButton HFH      =      new JButton("HFH");
-	static JButton KERR     =      new JButton("KERR");
-	static JButton LLCH     =      new JButton("LLCH");
-	static JButton PHELP    =      new JButton("PHELP");
-	static JButton NORTH    =      new JButton("NORTH");
-	static JButton SOUTH    = 	 new JButton("SOUTH");
-	static JButton CAMPBELL = 	 new JButton("CAMPBELL");
-	static JButton ENGRSCI  =	 new JButton("ENGRSCI");
-	static JButton ENGR2 	=	 new JButton("ENGR2");
-	static JButton LIBRARY 	=	 new JButton ("LIBRARY");
-	JButton cancel          =      new JButton("Cancel");//cancel button for subscreens
+	static final JButton T387     =      new JButton("387");
+	static final JButton T429     =      new JButton("429");
+	static final JButton BRDA     =      new JButton("BRDA");
+	static final JButton BSIF     =      new JButton("BSIF");
+	static final JButton GIRV     =      new JButton("GIRV");
+	static final JButton HSSB     =      new JButton("HSSB");
+	static final JButton HFH      =      new JButton("HFH");
+	static final JButton KERR     =      new JButton("KERR");
+	static final JButton LLCH     =      new JButton("LLCH");
+	static final JButton PHELP    =      new JButton("PHELP");
+	static final JButton NORTH    =      new JButton("NORTH");
+	static final JButton SOUTH    = 	 new JButton("SOUTH");
+	static final JButton CAMPBELL = 	 new JButton("CAMPBELL");
+	static final JButton ENGRSCI  =	 new JButton("ENGRSCI");
+	static final JButton ENGR2 	=	 new JButton("ENGR2");
+	static final JButton LIBRARY 	=	 new JButton ("LIBRARY");
+	JButton cancel                =      new JButton("Cancel");//cancel button for subscreens
 
       JLabel searchLabel   =      new JLabel("Search: ");
 	JLabel T387Label     =      new JLabel("387 - Trailer 387");
@@ -72,10 +79,10 @@ public class TheGUI{
       //Arrays of building names and abbreviations and buttons
       static ArrayList<String> bldgNames = new ArrayList<String>();
       static ArrayList<String> bldgAbbrs = new ArrayList<String>();
-      static ArrayList<JButton> buttons = new ArrayList<JButton>();
+      static ArrayList<JButton> buttonList = new ArrayList<JButton>();
+      static HashMap buttonMap = new HashMap();
       
-      //Important: The relative order of the name, abbr and button ArrayLists must be the same
-      //All new entries should call the .add() method in the same order for each ArrayList
+      //static field for filling arraylists and hashmap
       static {
             bldgNames.add("Trailer 387");
             bldgAbbrs.add("387");
@@ -109,22 +116,38 @@ public class TheGUI{
 		bldgAbbrs.add("SOUTH");
 
 
-            buttons.add(T387);
-            buttons.add(T429);
-            buttons.add(BRDA);
-            buttons.add(BSIF);
-            buttons.add(LIBRARY);
-            buttons.add(ENGRSCI);
-            buttons.add(ENGR2);
-            buttons.add(GIRV);
-            buttons.add(HFH);
-            buttons.add(HSSB);
-            buttons.add(KERR);
-            buttons.add(LLCH);
-            buttons.add(NORTH);
-            buttons.add(PHELP);
-		buttons.add(SOUTH);
+            buttonList.add(T387);
+            buttonList.add(T429);
+            buttonList.add(BRDA);
+            buttonList.add(BSIF);
+            buttonList.add(LIBRARY);
+            buttonList.add(ENGRSCI);
+            buttonList.add(ENGR2);
+            buttonList.add(GIRV);
+            buttonList.add(HFH);
+            buttonList.add(HSSB);
+            buttonList.add(KERR);
+            buttonList.add(LLCH);
+            buttonList.add(NORTH);
+            buttonList.add(PHELP);
+		buttonList.add(SOUTH);
 
+            for(int m = 0; m < buttonList.size(); m++) {
+                  buttonMap.put(bldgNames.get(m), buttonList.get(m));
+                  buttonMap.put(bldgAbbrs.get(m), buttonList.get(m));
+            }
+      }
+
+      // Methods for handling search bar adjusting
+      private static boolean isAdjusting(JComboBox cb) {
+            if (cb.getClientProperty("is_adjusting") instanceof Boolean) {
+                  return ((Boolean) cb.getClientProperty("is_adjusting"));
+                  }
+            return false;
+      }
+
+      private static void setAdjusting(JComboBox cb, boolean tof) {
+            cb.putClientProperty("is_adjusting", tof);
       }
 
         //building information
@@ -282,21 +305,28 @@ public class TheGUI{
             guiRemoveAll();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             thePanel.setLayout(new BoxLayout(thePanel, BoxLayout.X_AXIS));
-			thePanel.setBackground(Color.WHITE);
+	      thePanel.setBackground(Color.WHITE);
             thePanel.setSize(600,400);
+            //topPanel.setLayout(new BorderLayout());
             topPanel.setBackground(Color.WHITE);
             topPanel.setSize(600,50);
+            //topSub1.setBackground(Color.WHITE);
+            //topSub1.setSize(600,50);
+            //topSub2.setBackground(Color.WHITE);
+            //topSub2.setSize(600,50);
             leftPanel.setBackground(Color.WHITE);
             leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
             leftPanel.setSize(300,200);
             rightPanel.setBackground(Color.WHITE);
             rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
             rightPanel.setSize(300,200);
-     	 
+
             //setting size and adding actionlister
-            searchBar.addActionListener(new SearchBarActionListener());
-	      //DocumentListener searchBarUpdate;
+            searchBar.addKeyListener(new SearchBarKeyListener());
             searchBar.getDocument().addDocumentListener(new SearchBarDocumentListener());
+            setAdjusting(suggestBox, false);
+            suggestBox.setSelectedItem(null);
+            suggestBox.addActionListener(new SuggestionListener());
             T387.setPreferredSize(new Dimension(100,100));
             T387.addActionListener(new T387Listener());
             T429.setPreferredSize(new Dimension(100,100));
@@ -327,6 +357,7 @@ public class TheGUI{
 		ENGR2.addActionListener(new ENGR2Listener());
 		LIBRARY.setPreferredSize(new Dimension(100,100));
 		LIBRARY.addActionListener(new LIBRARYListener());
+            suggestBox.setPreferredSize(new Dimension(20, 0));
 
             //adding panels and setting dimensions
             topPanel.add(searchLabel);
@@ -362,6 +393,10 @@ public class TheGUI{
 		rightPanel.add(Box.createRigidArea(new Dimension(200,75)));
             thePanel.add(leftPanel);
             thePanel.add(rightPanel);
+            searchBar.setLayout(new BorderLayout());
+            searchBar.add(suggestBox, BorderLayout.SOUTH);
+            //topPanel.add(topSub1);
+            //topPanel.add(topSub2);
             frame.getContentPane().add(BorderLayout.CENTER, thePanel);
             frame.getContentPane().add(BorderLayout.NORTH, topPanel);
             frame.setSize(420, 600);
@@ -381,6 +416,7 @@ public class TheGUI{
             thePanel.removeAll();
             newPanel.removeAll();
             searchBar.setText("");
+            suggestBox.removeAllItems();
             frame.getContentPane().removeAll();
             frame.getContentPane().remove(thePanel);
             frame.getContentPane().remove(newPanel);
@@ -388,38 +424,47 @@ public class TheGUI{
             frame.repaint();
 	}//end guiRemoveAll
 
-      public void search() throws IOException {
+
+      public void search() {
             String query = searchBar.getText();
-            if (bldgAbbrs.contains(query) || bldgNames.contains(query)) {
-                  int i = bldgNames.indexOf(query);
-                  int j = bldgAbbrs.indexOf(query);
-                  int k;
-                  k = i >= 0 ? i : j;
-                  buttons.get(k).doClick();
-                  return;
-            }
+	    
+	    if(!isAdjusting(suggestBox)) {
+		if(buttonMap.containsKey(query)) {
+		    setAdjusting(suggestBox, true); //reset during setUpHomeSchool
+		    ((JButton) buttonMap.get(query)).doClick();
+		}
+	    }
       }//end search
+      
 
-      public void autoComplete() throws IOException {
+      public void autoComplete() {
+            setAdjusting(suggestBox, true);
+            suggestBoxModel.removeAllElements();
             String query = searchBar.getText();
-            Vector<String> suggestions = new Vector<String>();
-            for(String abbr: bldgAbbrs) {
-                  if(abbr.startsWith(query)){
-                        suggestions.add(abbr);
+
+            if(!query.isEmpty()) {
+                  for(String item : bldgNames) {
+                        if(item.toLowerCase().startsWith(query.toLowerCase())) {
+                              suggestBoxModel.addElement(item);
+                        }
                   }
-            }
-            for(String name: bldgNames) {
-                  if(name.startsWith(query)) {
-                        suggestions.add(name);
+                  for(String item : bldgAbbrs) {
+                        if(item.toLowerCase().startsWith(query.toLowerCase())) {
+                              suggestBoxModel.addElement(item);
+                        }
                   }
             }
 
-            //Test loop for suggestions vector
-            for(int j = 0; j < suggestions.size(); j++) {
-                  System.out.println(suggestions.get(j));
-            }
-            System.out.println("");
+            suggestBox.setPopupVisible(suggestBoxModel.getSize() > 0);
+            setAdjusting(suggestBox, false);
       }//end autoComplete
+
+      public void setSuggestion() {
+	  //if(!isAdjusting(suggestBox)) {
+	      searchBar.setText(suggestBox.getSelectedItem().toString());
+	      suggestBox.setPopupVisible(false);
+	      //}
+      }//end setSuggestion
 
 	public void T387() throws IOException{
             guiRemoveAll();
@@ -909,50 +954,66 @@ public class TheGUI{
 	
       //action listener class for the search bar
       //this is called when a user presses enter
-      class SearchBarActionListener implements ActionListener{
-            public void actionPerformed(ActionEvent event){
-            try {search();}
-                catch (IOException ex) {
-                    Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
-                      }
+      
+      class SearchBarKeyListener extends KeyAdapter {
+
+            public void keyPressed(KeyEvent event) {
+                  setAdjusting(suggestBox, true);
+                  int keyCode = event.getKeyCode();
+
+                  if(keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
+                        //These following two lines forward the appropriate action to the JComboBox based on the key pressed?
+                        event.setSource(suggestBox);
+                        suggestBox.dispatchEvent(event);
+
+                        if(keyCode == KeyEvent.VK_ENTER) {
+                              setSuggestion();
+                              search();
+                        }
+                  }
+
+                  if(keyCode == KeyEvent.VK_ESCAPE) {
+                        suggestBox.setPopupVisible(false);
+                  }
+                  setAdjusting(suggestBox, false);
             }
-      }//end SearchBarActionListener
+
+      }// end SearchBarKeyListener
+      
 
       //document listener for the search bar
       //this is called for every change made to the JTextField 'searchBar'
       class SearchBarDocumentListener implements DocumentListener{
 	  public void changedUpdate(DocumentEvent e){
-	      /* The search bar doesn't need to know about attribute updates
-		 other than text insertion and deletion
-	      try {autoComplete();}
-	      catch (IOException ex) {
-		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
-	      }
-	      */
+	      autoComplete();
 	  }
 	  //called when there is an insertion to the document
 	  public void insertUpdate(DocumentEvent e){
-	      try {autoComplete();}
-	      catch (IOException ex) {
-		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
-	      }
+	      autoComplete();
 	  }
 	  //called when there is a deletion in the document
 	  public void removeUpdate(DocumentEvent e){
-	      try {autoComplete();}
-	      catch (IOException ex) {
-		  Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
-	      }
+	      autoComplete();
 	  }
       }//end SearchBarDocumentActionListener
+
+
+      //called when a selection in the suggestion bar is made
+      class SuggestionListener implements ActionListener{
+            public void actionPerformed(ActionEvent event){
+                  if(!isAdjusting(suggestBox) && suggestBox.getSelectedItem() != null) {
+                        setSuggestion();
+                  }
+            }
+      }//end SuggestionListener
 
 	//action listener class for the cancel button
 	class CancelActionListener implements ActionListener{
             public void actionPerformed(ActionEvent event){
-        	try {setUpHomeScreen();}
-                catch (IOException ex) {
-                    Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        	   try{setUpHomeScreen();}
+                  catch (IOException ex) {
+                      Logger.getLogger(TheGUI.class.getName()).log(Level.SEVERE, null, ex);
+                      }
             }
 	}//end CancelActionListener
 
