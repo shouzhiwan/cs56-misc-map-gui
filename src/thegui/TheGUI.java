@@ -70,63 +70,6 @@ public class TheGUI{
     JLabel ENGR2Label    =      new JLabel("ENGR2 - Engineering II Building");
     JLabel LIBRARYLabel  =      new JLabel("LIBRARY - Davidson Library");
 
-      //Arrays of building names and abbreviations and buttons
-      static ArrayList<String> bldgNames = new ArrayList<String>();
-      static ArrayList<String> bldgAbbrs = new ArrayList<String>();
-      static ArrayList<JButton> buttons = new ArrayList<JButton>();
-      
-      //Important: The relative order of the name, abbr and button ArrayLists must be the same
-      //All new entries should call the .add() method in the same order for each ArrayList
-      static {
-		bldgNames.add("Trailer 387");
-		bldgAbbrs.add("387");
-		bldgNames.add("Trailer 429");
-		bldgAbbrs.add("429");
-		bldgNames.add("Broida Hall");
-		bldgAbbrs.add("BRDA");
-		bldgNames.add("Biological Sciences Instruction Facility");
-		bldgAbbrs.add("BSIF");
-		bldgNames.add("Davidson Library");
-		bldgAbbrs.add("LIBRARY");
-		bldgNames.add("Engineering Science Building");
-		bldgAbbrs.add("ENGRSCI");
-		bldgNames.add("Engineering II Building");
-		bldgAbbrs.add("ENGR2");
-		bldgNames.add("Girvetz Hall");
-		bldgAbbrs.add("GIRV");
-		bldgNames.add("Harold Frank Hall");
-		bldgAbbrs.add("HFH");
-		bldgNames.add("Humanities and Social Sciences Building");
-		bldgAbbrs.add("HSSB");
-		bldgNames.add("Kerr Hall");
-		bldgAbbrs.add("KERR");
-		bldgNames.add("Lotte-Lehmann Concert Hall");
-		bldgAbbrs.add("LLCH");
-		bldgNames.add("North Hall");
-		bldgAbbrs.add("NORTH");
-		bldgNames.add("Phelps Hall");
-		bldgAbbrs.add("PHELP");
-	    bldgNames.add("South Hall");
-	    bldgAbbrs.add("SOUTH");
-
-
-		buttons.add(T387);
-		buttons.add(T429);
-		buttons.add(BRDA);
-		buttons.add(BSIF);
-		buttons.add(LIBRARY);
-		buttons.add(ENGRSCI);
-		buttons.add(ENGR2);
-		buttons.add(GIRV);
-		buttons.add(HFH);
-		buttons.add(HSSB);
-		buttons.add(KERR);
-		buttons.add(LLCH);
-		buttons.add(NORTH);
-		buttons.add(PHELP);
-	    buttons.add(SOUTH);
-
-      }
 
         //function to set up the homescreen
 	public void setUpHomeScreen() throws IOException{
@@ -247,12 +190,12 @@ public class TheGUI{
 	public void search() throws IOException {
   
 		String query = searchBar.getText();
-		if (bldgAbbrs.contains(query) || bldgNames.contains(query)) {
-			  int i = bldgNames.indexOf(query);
-			  int j = bldgAbbrs.indexOf(query);
+		if (MapStatics.bldgAbbrs.contains(query) || MapStatics.bldgNames.contains(query)) {
+			  int i = MapStatics.bldgNames.indexOf(query);
+			  int j = MapStatics.bldgAbbrs.indexOf(query);
 			  int k;
 			  k = i >= 0 ? i : j;
-			  buttons.get(k).doClick();
+			  MapStatics.buttons.get(k).doClick();
 			  return;
 		}
       }//end search
@@ -261,12 +204,12 @@ public class TheGUI{
 	public void autoComplete() throws IOException {
 		String query = searchBar.getText();
 		Vector<String> suggestions = new Vector<String>();
-		for(String abbr: bldgAbbrs) {
+		for(String abbr: MapStatics.bldgAbbrs) {
 			  if(abbr.startsWith(query)){
 					suggestions.add(abbr);
 			  }
 		}
-		for(String name: bldgNames) {
+		for(String name: MapStatics.bldgNames) {
 			  if(name.startsWith(query)) {
 					suggestions.add(name);
 			  }
@@ -285,7 +228,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea T387TA = new JTextArea(DirectionStrings.T387Info);
+		JTextArea T387TA = new JTextArea(MapStatics.T387Info);
 		T387TA.setEditable(false);
 		T387TA.setLineWrap(true);
 		T387TA.setWrapStyleWord(true);
@@ -320,7 +263,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea T429TA = new JTextArea(DirectionStrings.T429Info);
+		JTextArea T429TA = new JTextArea(MapStatics.T429Info);
 		T429TA.setEditable(false);
 		T429TA.setLineWrap(true);
 		T429TA.setWrapStyleWord(true);
@@ -354,7 +297,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea BRDATA = new JTextArea(DirectionStrings.BRDAInfo);
+		JTextArea BRDATA = new JTextArea(MapStatics.BRDAInfo);
 		BRDATA.setEditable(false);
 		BRDATA.setLineWrap(true);
 		BRDATA.setWrapStyleWord(true);
@@ -387,7 +330,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea BSIFTA = new JTextArea(DirectionStrings.BSIFInfo);
+		JTextArea BSIFTA = new JTextArea(MapStatics.BSIFInfo);
 		BSIFTA.setEditable(false);
 		BSIFTA.setLineWrap(true);
 		BSIFTA.setWrapStyleWord(true);
@@ -420,7 +363,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea GIRVTA = new JTextArea(DirectionStrings.GIRVInfo);
+		JTextArea GIRVTA = new JTextArea(MapStatics.GIRVInfo);
 		GIRVTA.setEditable(false);
 		GIRVTA.setLineWrap(true);
 		GIRVTA.setWrapStyleWord(true);
@@ -453,7 +396,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea HFHTA = new JTextArea(DirectionStrings.HFHInfo);
+		JTextArea HFHTA = new JTextArea(MapStatics.HFHInfo);
 		HFHTA.setEditable(false);
 		HFHTA.setLineWrap(true);
 		HFHTA.setWrapStyleWord(true);
@@ -487,7 +430,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea HSSBTA = new JTextArea(DirectionStrings.HSSBInfo);
+		JTextArea HSSBTA = new JTextArea(MapStatics.HSSBInfo);
 		HSSBTA.setEditable(false);
 		HSSBTA.setLineWrap(true);
 		HSSBTA.setWrapStyleWord(true);
@@ -521,7 +464,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea KERRTA = new JTextArea(DirectionStrings.KERRInfo);
+		JTextArea KERRTA = new JTextArea(MapStatics.KERRInfo);
 		KERRTA.setEditable(false);
 		KERRTA.setLineWrap(true);
 		KERRTA.setWrapStyleWord(true);
@@ -555,7 +498,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea LLCHTA = new JTextArea(DirectionStrings.LLCHInfo);
+		JTextArea LLCHTA = new JTextArea(MapStatics.LLCHInfo);
 		LLCHTA.setEditable(false);
 		LLCHTA.setLineWrap(true);
 		LLCHTA.setWrapStyleWord(true);
@@ -587,7 +530,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea PHELPTA = new JTextArea(DirectionStrings.PHELPInfo);
+		JTextArea PHELPTA = new JTextArea(MapStatics.PHELPInfo);
 		PHELPTA.setEditable(false);
 		PHELPTA.setLineWrap(true);
 		PHELPTA.setWrapStyleWord(true);
@@ -621,7 +564,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea NORTHTA = new JTextArea(DirectionStrings.NORTHInfo);
+		JTextArea NORTHTA = new JTextArea(MapStatics.NORTHInfo);
 		NORTHTA.setEditable(false);
 		NORTHTA.setLineWrap(true);
 		NORTHTA.setWrapStyleWord(true);
@@ -651,7 +594,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea SOUTHTA = new JTextArea(DirectionStrings.SOUTHInfo);
+		JTextArea SOUTHTA = new JTextArea(MapStatics.SOUTHInfo);
 		SOUTHTA.setEditable(false);
 		SOUTHTA.setLineWrap(true);
 		SOUTHTA.setWrapStyleWord(true);
@@ -681,7 +624,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea ENGRSCITA = new JTextArea(DirectionStrings.ENGRSCIInfo);
+		JTextArea ENGRSCITA = new JTextArea(MapStatics.ENGRSCIInfo);
 		ENGRSCITA.setEditable(false);
 		ENGRSCITA.setLineWrap(true);
 		ENGRSCITA.setWrapStyleWord(true);
@@ -711,7 +654,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea ENGR2TA = new JTextArea(DirectionStrings.ENGR2Info);
+		JTextArea ENGR2TA = new JTextArea(MapStatics.ENGR2Info);
 		ENGR2TA.setEditable(false);
 		ENGR2TA.setLineWrap(true);
 		ENGR2TA.setWrapStyleWord(true);
@@ -741,7 +684,7 @@ public class TheGUI{
 		newPanel.setBackground(Color.WHITE);
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		newPanel.setSize(800,625);
-		JTextArea LIBRARYTA = new JTextArea(DirectionStrings.LIBRARYInfo);
+		JTextArea LIBRARYTA = new JTextArea(MapStatics.LIBRARYInfo);
 		LIBRARYTA.setEditable(false);
 		LIBRARYTA.setLineWrap(true);
 		LIBRARYTA.setWrapStyleWord(true);
