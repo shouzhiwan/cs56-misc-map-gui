@@ -79,17 +79,33 @@ public class TheGUI{
 
    
 
-      // Methods for handling search bar adjusting
-      private static boolean isAdjusting(JComboBox cb) {
-            if (cb.getClientProperty("is_adjusting") instanceof Boolean) {
-                  return ((Boolean) cb.getClientProperty("is_adjusting"));
-                  }
-            return false;
-      }
+    // Methods for handling search bar adjusting
+    // This makes sure the popup box isn't edited by multiple functions at the same time
+    private static boolean isAdjusting(JComboBox cb) {
+          if (cb.getClientProperty("is_adjusting") instanceof Boolean) {
+                return ((Boolean) cb.getClientProperty("is_adjusting"));
+          }
+        return false;
+    }//end isAdjusting
 
-      private static void setAdjusting(JComboBox cb, boolean tof) {
-            cb.putClientProperty("is_adjusting", tof);
-      }
+    private static void setAdjusting(JComboBox cb, boolean tof) {
+          cb.putClientProperty("is_adjusting", tof);
+    }//end setAdjusting
+
+    //These methods account for keyEvents being triggered when they are not supposed to:
+    //As far as I can tell, something is wrong with the methods on JAVA's end
+    //causing multiple events to trigger on a single key press
+    //This method property makes sure only one key press executes at a time
+    private static boolean isAdjusting2(JComboBox cb) {
+          if (cb.getClientProperty("is_adjusting_more") instanceof Boolean) {
+                return ((Boolean) cb.getClientProperty("is_adjusting_more"));
+          }
+          return false;
+    }//end isAdjusting2
+
+    private static void setAdjusting2(JComboBox cb, boolean tof) {
+          cb.putClientProperty("is_adjusting_more", tof);
+    }//end setAdjusting2
 
         //function to set up the homescreen
 	public void setUpHomeScreen() throws IOException{
@@ -188,6 +204,7 @@ public class TheGUI{
 		frame.setBackground(Color.WHITE);
 		frame.setVisible(true);
 		searchBar.requestFocus(); //put cursor in search bar
+		setAdjusting2(suggestBox, false);
 	}//end setUpHomeScreen
 	
 
@@ -195,6 +212,7 @@ public class TheGUI{
 	public void guiRemoveAll() {
 	
     	//this wipes the frame clean, use before switching panels
+    		setAdjusting2(suggestBox, true);
             leftPanel.removeAll();
             rightPanel.removeAll();
             bottomPanel.removeAll();
@@ -216,10 +234,10 @@ public class TheGUI{
   
 		String query = searchBar.getText();
 	    if(!isAdjusting(suggestBox)) {
-		if(MapStatics.buttonMap.containsKey(query)) {
-		    setAdjusting(suggestBox, true); //reset during setUpHomeSchool
-		    ((JButton) MapStatics.buttonMap.get(query)).doClick();
-		}
+			if(MapStatics.buttonMap.containsKey(query)) {
+		    	setAdjusting(suggestBox, true); //reset during setUpHomeScreen
+		    	((JButton) MapStatics.buttonMap.get(query)).doClick();
+			}
 	    }
       }//end search
 	  
@@ -250,8 +268,9 @@ public class TheGUI{
     }//end autoComplete
     
     public void setSuggestion() {
+    	if(!isAdjusting2(suggestBox)){
 	      searchBar.setText(suggestBox.getSelectedItem().toString());
-	      suggestBox.setPopupVisible(false);
+	      suggestBox.setPopupVisible(false);}
       }//end setSuggestion
   
 
@@ -274,7 +293,6 @@ public class TheGUI{
 		cancel.addActionListener(new CancelActionListener());
 		java.net.URL T387_URL = getClass().getResource("/387.jpg");
 		JLabel T387label = new JLabel(new ImageIcon(T387_URL));
-
 
 		//String Path = "387.jpg";
 		//File File = new File(Path);
@@ -748,16 +766,17 @@ public class TheGUI{
                   setAdjusting(suggestBox, true);
                   int keyCode = event.getKeyCode();
 
-                  if(keyCode == KeyEvent.VK_ENTER || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
+                  if(keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
                         //These following two lines forward the appropriate action to the JComboBox based on the key pressed?
                         event.setSource(suggestBox);
                         suggestBox.dispatchEvent(event);
+                    }
 
                         if(keyCode == KeyEvent.VK_ENTER) {
                               setSuggestion();
                               search();
                         }
-                  }
+                  
 
                   if(keyCode == KeyEvent.VK_ESCAPE) {
                         suggestBox.setPopupVisible(false);
@@ -790,6 +809,7 @@ public class TheGUI{
             public void actionPerformed(ActionEvent event){
                   if(!isAdjusting(suggestBox) && suggestBox.getSelectedItem() != null) {
                         setSuggestion();
+                        search();
                   }
             }
       }//end SuggestionListener
